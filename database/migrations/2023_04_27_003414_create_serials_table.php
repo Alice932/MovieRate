@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('actors');
             $table->string('format');
             $table->text('content');
-            $table->integer('year');
-            $table->decimal('rating', 3, 1);
+            $table->string('year');
+            $table->string('rating');
             $table->string('image');
             $table->timestamps();
         });

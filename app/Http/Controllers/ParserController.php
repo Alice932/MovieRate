@@ -40,9 +40,41 @@ class ParserController extends Controller
             $jsonScript = $newCrawler->filter('script[type="application/ld+json"]')->first()->text();
             $jsonData = json_decode($jsonScript, true);
 
-            $title = $jsonData['name'];
-            $imageUrl = $jsonData['image']['url'];
-            
+            $title = $jsonData['name'] ?? '-';
+            $imageUrl = $jsonData['image']['url'] ?? '-';
+            $directorName = $jsonData['director']['name'] ?? '-';
+            $actors = [];
+            $actorsData = $jsonData['actor'] ?? [];
+            foreach ($actorsData as $actorData) {
+                $actors[] = $actorData['name'] ?? '-';
+            }
+            $actorsString = implode(', ', $actors);
+            $ratingValue = $jsonData['aggregateRating']['ratingValue'] ?? '-';
+            $format = $jsonData['@type'] ?? '-';
+            $genre = $jsonData['genre'] ?? '-';
+            $content = $newCrawler->filter('.content-txt')->each(function ($node) {
+                return $node->text();
+            });
+
+            $contentString = implode(" ", $content);
+            $genre = $jsonData['genre'] ?? '-';
+            if (is_array($genre)) {
+                $genre = implode(', ', $genre);
+            }
+
+
+
+            // echo($contentString);
+            // echo gettype($title);
+            // echo gettype($imageUrl);
+            // echo gettype($directorName);
+            // echo gettype($actorsString);
+            // echo gettype($ratingValue);
+            // echo gettype($format);
+            // echo gettype($genre);
+            // echo gettype($contentString);
+
+
             // $source = 'de';
             // $target = 'en';
             // $attempts = 5;
@@ -55,17 +87,26 @@ class ParserController extends Controller
             // dd("Title: ");
             // echo($english_text[0]);
             // echo($title);
+            $source = 'de';
+            $target = 'en';
+            $attempts = 5;
+            $arr = [$title, $genre, $contentString];
 
+            $tr = new GoogleTranslateForFree();
+            $english_text = $tr->translate($source, $target, $arr, $attempts);
+
+            echo "Title: ";
+            echo($english_text[0]);
             $movie = new Movie();
             $movie->title = $title;
             $movie->year = '2001';
             $movie->time = '21m';
-            $movie->director = 'anybody';
-            $movie->genre = 'Incrediable genre';
-            $movie->rating = 4.3;
-            $movie->actors = 'Any Body';
-            $movie->content = 'text';
-            $movie->format = 'movie';
+            $movie->director = $directorName;
+            $movie->genre = $english_text[1];
+            $movie->rating = $ratingValue;
+            $movie->actors = $actorsString;
+            $movie->content = $english_text[2];
+            $movie->format = $format;
             $movie->image = $imageUrl;
             $movie->save();
 

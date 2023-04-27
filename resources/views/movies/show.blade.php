@@ -18,18 +18,13 @@
                             <p>Genre: {{ $movie->genre }}</p>
                             <p>During: {{ $movie->time }}</p>
                             <div class="clear"></div>
-                            <p class="txt">
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed elit. Nulla sem risus,
-                                vestibulu volutpat eget, dapibus ac, lectus. Curabitur dolor sapien, hendrerit non Lorem
-                                ipsum dolor sit amet, consectetuer adipiscing elit. Sed elit. Nulla sem risus...
-                            </p>
                         </div>
                         <br />
                         <p class="txt">
                             {{ $movie->content }}
                         </p>
                         <br />
-                        <p class="txt">
+                        {{-- <p class="txt">
                             cNam sapien. Maecenas mattis blandit lacus. Cras non pede. Phasellus consectetuer.
                             Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
                             egestas. Suspendisse ut augue. Mauris non magna. Nunc in enim. In hendrerit lorem sit amet
@@ -78,7 +73,7 @@
                             egestas. Suspendisse ut augue. Mauris non magna. Nunc in enim. In hendrerit lorem sit amet
                             mi. Aliquam rutrum, turpis id tempor ullamcorper, sem risus molestie tortor, eget placerat
                             ante tortor at tortor. Mauris odio.
-                        </p>
+                        </p> --}}
                     </li>
                 </ul>
                 <div class="clear"></div>
