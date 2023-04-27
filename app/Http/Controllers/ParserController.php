@@ -7,110 +7,107 @@ use App\Models\Movie;
 use Illuminate\Http\Request;
 use \Dejurin\GoogleTranslateForFree;
 
-use Symfony\Component\BrowserKit\HttpBrowser;
-use Symfony\Component\HttpClient\HttpClient;
 class ParserController extends Controller
 {
     public function parseMovies(Request $request)
     {
-        // Создаем экземпляр клиента Goutte
-        $client = new Client();
+        $client = new Client();  // Create a new instance of Goutte client for web scraping
 
-        // Определяем URL-адрес сайта, с которого хотим парсить информацию
-        $url = 'https://www.filmstarts.de/kritiken/filme-alle/';
+        $baseUrl = "https://www.filmstarts.de/kritiken/filme-alle/";
 
-        // Получаем страницу с фильмами
-        $crawler = $client->request('GET', $url);
+        for ($i = 1; $i <= 2; $i++) { // Loop over two pages for scraping
+            $url = $baseUrl . "?page=" . $i;
 
-        // Получаем список ссылок на страницы с фильмами
-        $links = $crawler->filter('a[href^="/kritiken/"]')->extract(['href']);
-        $links = array_filter($links, function($link) {
-            return preg_match('/^\/kritiken\/\d+\.html$/', $link);
-        });
-        // Проходим по каждой странице и получаем необходимую информацию
-        dump($links);
-        foreach ($links as $link) {
-            $newClient = new Client();
-            $newCrawler = $newClient->request('GET', 'https://www.filmstarts.de' . $link);
+            $crawler = $client->request('GET', $url); // Make a GET request to a URL and store the response in $crawler object
 
-            echo $newCrawler->getUri();
-            dump($link);
-            dump($newCrawler);
-
-            $jsonScript = $newCrawler->filter('script[type="application/ld+json"]')->first()->text();
-            $jsonData = json_decode($jsonScript, true);
-
-            $title = $jsonData['name'] ?? '-';
-            $imageUrl = $jsonData['image']['url'] ?? '-';
-            $directorName = $jsonData['director']['name'] ?? '-';
-            $actors = [];
-            $actorsData = $jsonData['actor'] ?? [];
-            foreach ($actorsData as $actorData) {
-                $actors[] = $actorData['name'] ?? '-';
-            }
-            $actorsString = implode(', ', $actors);
-            $ratingValue = $jsonData['aggregateRating']['ratingValue'] ?? '-';
-            $format = $jsonData['@type'] ?? '-';
-            $genre = $jsonData['genre'] ?? '-';
-            $content = $newCrawler->filter('.content-txt')->each(function ($node) {
-                return $node->text();
+            $links = $crawler->filter('a[href^="/kritiken/"]')->extract(['href']); // Use a CSS selector to extract all the links that contain "/kritiken/" in their href attribute
+            $links = array_filter($links, function($link) { // Filter out the links that do not match the specified pattern
+                return preg_match('/^\/kritiken\/\d+\.html$/', $link);
             });
+            dump($links);
+            foreach ($links as $link) {  // Loop over each link and extract the required data
+                $newClient = new Client();
+                $newCrawler = $newClient->request('GET', 'https://www.filmstarts.de' . $link);
 
-            $contentString = implode(" ", $content);
-            $genre = $jsonData['genre'] ?? '-';
-            if (is_array($genre)) {
-                $genre = implode(', ', $genre);
+                dump($newCrawler);
+
+                // Use a CSS selector to extract the first script element of type "application/ld+json" and store its text content in $jsonScript
+                $jsonScript = $newCrawler->filter('script[type="application/ld+json"]')->first()->text();
+                $jsonData = json_decode($jsonScript, true);
+
+                // Extract the movie info from the $jsonData array, if it exists
+                $title = $jsonData['name'] ?? '-';
+                $imageUrl = $jsonData['image']['url'] ?? '-';
+                $directorName = $jsonData['director']['name'] ?? '-';
+                $actors = [];
+                $actorsData = $jsonData['actor'] ?? [];
+                foreach ($actorsData as $actorData) {
+                    $actors[] = $actorData['name'] ?? '-';
+                }
+                $actorsString = implode(', ', $actors);
+                $ratingValue = $jsonData['aggregateRating']['ratingValue'] ?? '-';
+                $format = $jsonData['@type'] ?? '-';
+                $genre = $jsonData['genre'] ?? '-';
+                $content = $newCrawler->filter('.content-txt')->each(function ($node) {
+                    return $node->text();
+                });
+
+                $contentString = implode(" ", $content);
+                $genre = $jsonData['genre'] ?? '-';
+                if (is_array($genre)) {
+                    $genre = implode(', ', $genre);
+                }
+                $duration = $jsonData['duration'] ?? '-';
+
+                if ($duration !== '-') {
+                    preg_match('/PT(\d+)H(\d+)M/i', $duration, $matches);
+                    $hours = $matches[1] ?? '00';
+                    $minutes = $matches[2] ?? '00';
+                    echo $hours;
+                    echo $minutes;
+                    $duration = ($hours ."h " . $minutes . "min");
+                } else {
+                    $duration = '-';
+                }
+
+                $year = $newCrawler->filter('.date')->first()->text();
+                echo($year);
+                preg_match('/(\d{1,2}\.\s(?:Jan(?:uar)?|Feb(?:ruar)?|März|Apr(?:il)?|Mai|Jun(?:i)?|Jul(?:i)?|Aug(?:ust)?|Sep(?:tember)?|Okt(?:ober)?|Nov(?:ember)?|Dez(?:ember)?)\s\d{4})/', $year, $matches);
+                if (count($matches) > 0) {
+                    $year = $matches[1];
+                } else {
+                    $year = '-';
+                }
+
+                // Translate extracted data from German to English using Fake Google Translate API
+
+                $source = 'de';
+                $target = 'en';
+                $attempts = 5;
+                $arr = [$title, $genre, $contentString, $year];
+
+                $tr = new GoogleTranslateForFree();
+                $english_text = $tr->translate($source, $target, $arr, $attempts);
+
+                //Create or update movie in database with the extracted and translated data
+
+                $movie = Movie::firstOrCreate([
+                    'title' => $english_text[0],
+                ], [
+                    'year' => $english_text[3],
+                    'time' => $duration,
+                    'director' => $directorName,
+                    'genre' => $english_text[1],
+                    'rating' => $ratingValue,
+                    'actors' => $actorsString,
+                    'content' => $english_text[2],
+                    'format' => $format,
+                    'image' => $imageUrl,
+                ]);
+
             }
-
-
-
-            // echo($contentString);
-            // echo gettype($title);
-            // echo gettype($imageUrl);
-            // echo gettype($directorName);
-            // echo gettype($actorsString);
-            // echo gettype($ratingValue);
-            // echo gettype($format);
-            // echo gettype($genre);
-            // echo gettype($contentString);
-
-
-            // $source = 'de';
-            // $target = 'en';
-            // $attempts = 5;
-            // $arr = [$title, 'Manta'];
-            // echo $title;
-
-            // $tr = new GoogleTranslateForFree();
-            // $english_text = $tr->translate($source, $target, $arr, $attempts);
-
-            // dd("Title: ");
-            // echo($english_text[0]);
-            // echo($title);
-            $source = 'de';
-            $target = 'en';
-            $attempts = 5;
-            $arr = [$title, $genre, $contentString];
-
-            $tr = new GoogleTranslateForFree();
-            $english_text = $tr->translate($source, $target, $arr, $attempts);
-
-            echo "Title: ";
-            echo($english_text[0]);
-            $movie = new Movie();
-            $movie->title = $title;
-            $movie->year = '2001';
-            $movie->time = '21m';
-            $movie->director = $directorName;
-            $movie->genre = $english_text[1];
-            $movie->rating = $ratingValue;
-            $movie->actors = $actorsString;
-            $movie->content = $english_text[2];
-            $movie->format = $format;
-            $movie->image = $imageUrl;
-            $movie->save();
-
-        }
+    }
         return response()->json(['message' => 'Movies parsed successfully!']);
+
     }
 }
