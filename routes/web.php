@@ -20,7 +20,4 @@ Route::get('/serials', 'App\Http\Controllers\SerialController@index')->name('ser
 Route::get('/serials/{serial}', 'App\Http\Controllers\SerialController@show')->name('serials.show');
 
 Route::get('/parse', 'App\Http\Controllers\ParserController@parseMovies')->name('parse.movies');
-Route::get('/parse/create', 'App\Http\Controllers\ParserController@create');
-// Route::get('/parser/links', 'App\Http\Controllers\ParserController@getLinks');
-// Route::get('/parser/page/{url}', 'App\Http\Controllers\ParserController@parsePage');
 
