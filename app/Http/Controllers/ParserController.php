@@ -2,62 +2,74 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Goutte\Client;
-use GuzzleHttp\Client as GuzzleClient;
+use App\Models\Movie;
+use Illuminate\Http\Request;
+use \Dejurin\GoogleTranslateForFree;
 
+use Symfony\Component\BrowserKit\HttpBrowser;
+use Symfony\Component\HttpClient\HttpClient;
 class ParserController extends Controller
 {
-  public function parsePage($url)
-  {
-      // Создаем экземпляр клиента Goutte
-      $client = new Client();
+    public function parseMovies(Request $request)
+    {
+        // Создаем экземпляр клиента Goutte
+        $client = new Client();
 
-      // Переходим на страницу
-      $crawler = $client->request('GET', $url);
+        // Определяем URL-адрес сайта, с которого хотим парсить информацию
+        $url = 'https://www.filmstarts.de/kritiken/filme-alle/';
 
-      // Получаем текст статьи
-      $articleText = $crawler->filter('.content-txt')->first()->text();
+        // Получаем страницу с фильмами
+        $crawler = $client->request('GET', $url);
 
-      // Возвращаем текст статьи
-      return response($articleText);
-  }
+        // Получаем список ссылок на страницы с фильмами
+        $links = $crawler->filter('a[href^="/kritiken/"]')->extract(['href']);
+        $links = array_filter($links, function($link) {
+            return preg_match('/^\/kritiken\/\d+\.html$/', $link);
+        });
+        // Проходим по каждой странице и получаем необходимую информацию
+        dump($links);
+        foreach ($links as $link) {
+            $newClient = new Client();
+            $newCrawler = $newClient->request('GET', 'https://www.filmstarts.de' . $link);
 
-  public function getLinks()
-  {
-      // Создаем экземпляр клиента Guzzle
-      $guzzleClient = new GuzzleClient();
+            echo $newCrawler->getUri();
+            dump($link);
+            dump($newCrawler);
 
-      // Отправляем GET-запрос на страницу со списком статей
-      $response = $guzzleClient->get('https://www.filmstarts.de/kritiken/');
+            $jsonScript = $newCrawler->filter('script[type="application/ld+json"]')->first()->text();
+            $jsonData = json_decode($jsonScript, true);
 
-      // Получаем HTML-код страницы
-      $html = $response->getBody()->getContents();
+            $title = $jsonData['name'];
+            $imageUrl = $jsonData['image']['url'];
+            
+            // $source = 'de';
+            // $target = 'en';
+            // $attempts = 5;
+            // $arr = [$title, 'Manta'];
+            // echo $title;
 
-      // Создаем экземпляр парсера DOM
-      $dom = new \DOMDocument();
+            // $tr = new GoogleTranslateForFree();
+            // $english_text = $tr->translate($source, $target, $arr, $attempts);
 
-      // Загружаем HTML-код страницы в парсер
-      @$dom->loadHTML($html);
+            // dd("Title: ");
+            // echo($english_text[0]);
+            // echo($title);
 
-      // Создаем экземпляр клиента Goutte
-      $client = new Client();
+            $movie = new Movie();
+            $movie->title = $title;
+            $movie->year = '2001';
+            $movie->time = '21m';
+            $movie->director = 'anybody';
+            $movie->genre = 'Incrediable genre';
+            $movie->rating = 4.3;
+            $movie->actors = 'Any Body';
+            $movie->content = 'text';
+            $movie->format = 'movie';
+            $movie->image = $imageUrl;
+            $movie->save();
 
-      // Получаем список ссылок на статьи
-      $links = [];
-      foreach ($dom->getElementsByTagName('a') as $node) {
-          $href = $node->getAttribute('href');
-          if (strpos($href, '/kritiken/') !== false) {
-              $links[] = 'https://www.filmstarts.de' . $href;
-          }
-      }
-
-      // Парсим каждую страницу и сохраняем текст статей в файлы
-      foreach ($links as $link) {
-          $this->parsePage($link);
-      }
-
-      // Возвращаем список ссылок
-      return response()->json($links);
-  }
+        }
+        return response()->json(['message' => 'Movies parsed successfully!']);
+    }
 }

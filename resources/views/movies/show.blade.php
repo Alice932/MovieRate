@@ -8,7 +8,7 @@
                 <ul class="bloglisting">
                     <li>
                         <div class="thumb">
-                            <img src = 'https://de.web.img3.acsta.net/c_310_420/medias/nmedia/18/83/52/87/19695765.jpg' alt="" width="154" height="222"/>
+                            <img src = {{ $movie->image }} alt="" width="154" height="222"/>
                         </div>
                         <div class="desc">
                             <h3 class="colr">{{ $movie->title }}</h3>
