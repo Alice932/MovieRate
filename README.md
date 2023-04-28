@@ -9,12 +9,12 @@ Parse logic based oon library - Goutte.
 
 1. Clone the repository:
 <pre>
-git clone https://github.com/your-username/your-project.git
+git clone https://github.com/Alice932/MovieRate.git
 </pre>
 
 2. Navigate to the project directory and install the dependencies:
 <pre>
-cd your-project
+cd MovieRate
 composer install
 </pre>
 
