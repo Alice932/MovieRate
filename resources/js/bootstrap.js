@@ -13,6 +13,11 @@ import axios from 'axios';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+$(document).ready(function(){
+  $('.carousel').carousel({
+    interval: 2000 // время между переходами, в миллисекундах
+  })
+})
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

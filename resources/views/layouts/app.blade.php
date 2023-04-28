@@ -26,20 +26,10 @@
         <!-- Top Section Left Links -->
         <div class="toplinks">
             <ul>
-                <li class="first"><a href="index.html">Home</a></li>
-                <li><a href="#">Mature Warning: On</a></li>
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Signup</a></li>
+                <li class="first"><a href="{{ route('home.index') }}">Home</a></li>
             </ul>
         </div>
         <!-- Top Section right Links -->
-        <div class="links_icons">
-            <ul>
-                <li><a href="#" class="browse">Browse</a></li>
-                <li><a href="#" class="upload">Upload</a></li>
-                <li class="last lang">Language: <a href="#"><img src="images/flag1.gif" alt="" /></a></li>
-            </ul>
-        </div>
     </div>
     <div class="clear"></div>
     <!-- Header -->
@@ -55,23 +45,6 @@
                     <li><a href="{{ route('home.index') }}" class="btn btn-primary">Home</a></li>
                     <li><a href="{{ route('movies.index') }}" class="btn btn-primary">Movies</a></li>
                     <li><a href="{{ route('serials.index') }}" class="btn btn-primary">Serials</a></li>
-                    <li><a href="blog.html">Blog</a>
-                        <ul>
-                            <li><a href="blog_post.html">Blog Post</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">All Pages</a>
-                        <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="listing.html">Listing</a></li>
-                            <li><a href="detail.html">Video Detail</a></li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="blog_post.html">Blog Post</a></li>
-                            <li><a href="news.html">News</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
-                            <li><a href="static.html">About Us</a></li>
-                        </ul>
-                    </li>
                 </ul>
                 <div class="clear"></div>
             </div>
@@ -81,6 +54,8 @@
     <div id="content_sec">
         @yield('content')
     </div>
+  </div>
+</div>
 <div class="clear"></div>
 <!-- Footer -->
 <div id="footer">
