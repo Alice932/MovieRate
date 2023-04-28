@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('genre');
-            $table->string('director');
-            $table->string('time');
+            $table->string('creator');
+            $table->string('episodes');
+            $table->string('seasons');
             $table->string('actors');
             $table->string('format');
             $table->text('content');
-            $table->string('year');
+            $table->string('country');
             $table->string('rating');
             $table->string('image');
             $table->timestamps();

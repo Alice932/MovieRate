@@ -8,7 +8,7 @@ class MovieController extends Controller
 {
     public function index()
     {
-        $movies = Movie::all();
+        $movies = Movie::paginate(12);
         return view('movies.index', compact('movies'));
     }
     public function show($id)
