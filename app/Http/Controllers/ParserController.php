@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Goutte\Client;
 use App\Models\Movie;
+use App\Models\Serial;
 use Illuminate\Http\Request;
 use \Dejurin\GoogleTranslateForFree;
 
@@ -15,7 +16,7 @@ class ParserController extends Controller
 
         $baseUrl = "https://www.filmstarts.de/kritiken/filme-alle/";
 
-        for ($i = 1; $i <= 2; $i++) { // Loop over two pages for scraping
+        for ($i = 1; $i <= 1; $i++) { // Loop over two pages for scraping
             $url = $baseUrl . "?page=" . $i;
 
             $crawler = $client->request('GET', $url); // Make a GET request to a URL and store the response in $crawler object
@@ -100,6 +101,110 @@ class ParserController extends Controller
                     'genre' => $english_text[1],
                     'rating' => $ratingValue,
                     'actors' => $actorsString,
+                    'content' => $english_text[2],
+                    'format' => $format,
+                    'image' => $imageUrl,
+                ]);
+
+            }
+    }
+        return response()->json(['message' => 'Movies parsed successfully!']);
+
+    }
+
+    public function parseSerials(Request $request)
+    {
+        $client = new Client();  // Create a new instance of Goutte client for web scraping
+
+        $baseUrl = "https://www.filmstarts.de/serien-archiv/";
+
+        for ($i = 1; $i <= 1; $i++) { // Loop over two pages for scraping
+            $url = $baseUrl . "?page=" . $i;
+
+            $crawler = $client->request('GET', $url); // Make a GET request to a URL and store the response in $crawler object
+
+            $links = $crawler->filter('a[href^="/serien/"]')->extract(['href']); // Use a CSS selector to extract all the links that contain "/kritiken/" in their href attribute
+            $links = array_filter($links, function($link) { // Filter out the links that do not match the specified pattern
+                return preg_match('/^\/serien\/\d+\.html$/', $link);
+            });
+            dump($links);
+            foreach ($links as $link) {  // Loop over each link and extract the required data
+                $newClient = new Client();
+                $newCrawler = $newClient->request('GET', 'https://www.filmstarts.de' . $link);
+
+                dump($newCrawler);
+
+                // Use a CSS selector to extract the first script element of type "application/ld+json" and store its text content in $jsonScript
+                $jsonScript = $newCrawler->filter('script[type="application/ld+json"]')->first()->text();
+                $jsonData = json_decode($jsonScript, true);
+
+                // Extract the movie info from the $jsonData array, if it exists
+                $title = $jsonData['name'] ?? '-';
+
+                $imageUrl = $jsonData['image']?? '-';
+
+                $episodes = $jsonData['numberOfEpisodes']?? '-';
+
+                $seasons = $jsonData['numberOfSeasons']?? '-';
+
+                $creatorNode = $newCrawler->filter('.meta-body-item:contains("Creator:")')->first();
+                $creator = "-";
+                if ($creatorNode->count() > 0) {
+                    $creator = $creatorNode->filter('a')->text();
+                }
+
+                //Not works yet
+
+                // $countryNode = $newCrawler->filter('.meta-body-nationality:contains("Produktionsland:")')->first()->text();
+                // $country = $countryNode ?: '-';
+
+                // if ($newCrawler->filter('.meta-body-item.meta-body-actor')->count() > 0) {
+                //     $actors = [];
+                //     $newCrawler->filter('meta.meta-body-item.meta-body-actor a')->each(function ($node) use (&$actors) {
+                //         $actors[] = $node->text();
+                //     });
+                //     $actorsStr = count($actors) > 0 ? implode(' ', $actors) : '-';
+                // } else {
+                //     $actorsStr = '-';
+                // }
+
+                $ratingValue = $jsonData['aggregateRating']['ratingValue'] ?? '-';
+
+                $format = $jsonData['@type'] ?? '-';
+
+                $content = $newCrawler->filter('.content-txt')->each(function ($node) {
+                    return $node->text();
+                });
+
+                $contentString = implode(" ", $content);
+
+                $genre = $jsonData['genre'] ?? '-';
+                if (is_array($genre)) {
+                    $genre = implode(', ', $genre);
+                }
+
+                // Translate extracted data from German to English using Fake Google Translate API
+
+                $source = 'de';
+                $target = 'en';
+                $attempts = 5;
+                $arr = [$title, $genre, $contentString];
+
+                $tr = new GoogleTranslateForFree();
+                $english_text = $tr->translate($source, $target, $arr, $attempts);
+
+                //Create or update movie in database with the extracted and translated data
+
+                $serial = Serial::firstOrCreate([
+                    'title' => $english_text[0],
+                ], [
+                    'country' => 'USA',
+                    'episodes' => $episodes,
+                    'seasons' => $seasons,
+                    'creator' => $creator,
+                    'genre' => $english_text[1],
+                    'rating' => $ratingValue,
+                    'actors' => 'John Doe',
                     'content' => $english_text[2],
                     'format' => $format,
                     'image' => $imageUrl,

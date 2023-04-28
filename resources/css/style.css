@@ -473,6 +473,41 @@ ul.forms li.textsec textarea{
 	margin-left:10px;
 	padding-top:1px;
 }
+
+ul.pagination li {
+	display: inline-block;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	text-align: center;
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+ul.pagination li a {
+	display: inline-block;
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	color: #555;
+	text-decoration: none;
+}
+
+ul.pagination li.active a {
+	background-color: #007bff;
+	color: #fff;
+	border-color: #007bff;
+}
+
+ul.pagination li.disabled a {
+	color: #ccc;
+	cursor: not-allowed;
+}
+
+ul.pagination li a img {
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+}
 /*
 =======================================================================
 	Content Section

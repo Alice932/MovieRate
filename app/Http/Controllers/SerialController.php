@@ -9,7 +9,7 @@ class SerialController extends Controller
 {
     public function index()
     {
-        $serials = Serial::all();
+        $serials = Serial::paginate(12);
         return view('serials.index', compact('serials'));
     }
 
