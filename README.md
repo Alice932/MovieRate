@@ -2,7 +2,8 @@
 
 ## About
 
-MovieRate Parser is a web scraping project built using Laravel framework version 8 and PHP version 7.4. The application scrapes movie data from the website movierate.co and stores it in a MySQL database. It also provides a basic user interface to view and search the scraped data.
+MovieRate Parser is a web scraping project built using Laravel framework version 10.8 and PHP version 8.1. The application scrapes movie data from the website movierate.co and stores it in a MySQL database. It also provides a basic user interface to view and search the scraped data.
+Parse logic based oon library - Goutte.
 
 ## Installation
 
