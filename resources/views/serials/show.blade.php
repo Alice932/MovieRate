@@ -13,8 +13,6 @@
                     <div class="desc">
                         <h3 class="colr">{{ $serial->title }}</h3>
                         <p>Creator: {{ $serial->creator }}</p>
-                        <p>Actors: {{ $serial->actors }}</p>
-                        <p>Year: {{ $serial->year }}</p>
                         <p>Genre: {{ $serial->genre }}</p>
                         <p>Seasons: {{ $serial->seasons }} seasons</p>
                         <p>Episodes: {{ $serial->episodes }} episodes</p>
