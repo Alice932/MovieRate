@@ -35,6 +35,21 @@ php artisan migrate
 php artisan serve
 </pre>
 
+7. Edit app/Console/Commands/ParseMoviesCommand:
+<pre>
+$maxPages = 100; //change to count of pages that you need
+</pre>
+Same with ParseSerialsCommand and ParseNewsCommand
+
+8. Launch parsing command:
+<pre>
+php artisan parse:movies
+
+php artisan parse:serials
+
+php artisan parse:news
+</pre>
+
 ## Project sitemap
 
 1. <b>Home Page:</b> Displays information about some movies. <i>(/)</i>
@@ -42,5 +57,5 @@ php artisan serve
 3. <b>Movies Show Page:</b> Displays detailed information about a particular movie. <i>(/movie/id)</i>
 4. <b>TV Shows Index Page:</b> Displays a list of all the TV shows in our database. <i>(/serials)</i>
 5. <b>TV Shows Show Page:</b> Displays detailed information about a particular TV show. <i>(/serial/id)</i>
-6. <b>Movies Parsing Page:</b> Allows the user to parse movies from an external website. <i>(/parse/movies)</i>
-7. <b>TV Shows Parsing Page:</b> Allows the user to parse TV shows from an external website. <i>(/parse/serials)</i>
+6. <b>News Index Page:</b> Displays a list of all the news in our database. <i>(/news)</i>
+7. <b>News Show Page:</b> Displays detailed information about news. <i>(/news/id)</i>
