@@ -31,7 +31,9 @@ class ParseMoviesCommand extends Command
 
         $baseUrl = "https://www.filmstarts.de/kritiken/filme-alle/";
         $movieNum = 1;
-        $maxPages = 1;
+
+        // All pages 6486. 15 movies per page
+        $maxPages = 100;
 
         for ($i = 1; $i <= $maxPages; $i++) { // Loop over two pages for scraping
             $url = $baseUrl . "?page=" . $i;

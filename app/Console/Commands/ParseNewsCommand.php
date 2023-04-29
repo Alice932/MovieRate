@@ -34,7 +34,9 @@ class ParseNewsCommand extends Command
         $baseUrl = "https://www.filmstarts.de/news/";
 
         $newsNum = 1;
-        $maxPages = 1;
+
+        // All pages 3017. 24 news per page
+        $maxPages = 100;
 
         for ($i = 1; $i <= $maxPages; $i++) { // Loop over two pages for scraping
             $url = $baseUrl . "?page=" . $i;

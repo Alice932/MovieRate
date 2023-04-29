@@ -6,8 +6,7 @@
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ mix('../css/app.css') }}" rel="stylesheet">
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/style.css', 'resources/css/scrollbar.css', 'resources/css/ddsmoothmenu.css'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css', 'resources/css/ddsmoothmenu.css'])
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>

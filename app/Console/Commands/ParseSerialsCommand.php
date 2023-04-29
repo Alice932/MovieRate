@@ -33,7 +33,9 @@ class ParseSerialsCommand extends Command
         $baseUrl = "https://www.filmstarts.de/serien-archiv/";
 
         $serialNum = 1;
-        $maxPages = 1;
+
+        // All pages 651. 19 serials per page
+        $maxPages = 100;
 
         for ($i = 1; $i <= $maxPages; $i++) { // Loop over two pages for scraping
             $url = $baseUrl . "?page=" . $i;
