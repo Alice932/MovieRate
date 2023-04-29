@@ -3,7 +3,6 @@
 @section('content')
     <div class="col1">
         <div class="blog">
-            <!-- Column 1 -->
             <h2 class="heading">{{ $movie->title }}</h2>
             <ul class="bloglisting">
                 <li>

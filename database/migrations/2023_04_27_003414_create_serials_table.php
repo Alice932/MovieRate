@@ -18,10 +18,8 @@ return new class extends Migration
             $table->string('creator');
             $table->string('episodes');
             $table->string('seasons');
-            $table->string('actors');
             $table->string('format');
             $table->text('content');
-            $table->string('country');
             $table->string('rating');
             $table->string('image');
             $table->timestamps();

@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> --}}
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
@@ -45,6 +44,7 @@
                     <li><a href="{{ route('home.index') }}" class="btn btn-primary">Home</a></li>
                     <li><a href="{{ route('movies.index') }}" class="btn btn-primary">Movies</a></li>
                     <li><a href="{{ route('serials.index') }}" class="btn btn-primary">Serials</a></li>
+                    <li><a href="{{ route('news.index') }}" class="btn btn-primary">News</a></li>
                 </ul>
                 <div class="clear"></div>
             </div>
