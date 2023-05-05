@@ -5,6 +5,7 @@ use Illuminate\Console\Command;
 use Goutte\Client;
 use App\Models\Movie;
 use \Dejurin\GoogleTranslateForFree;
+use Illuminate\Support\Facades\DB;
 
 class ParseMoviesCommand extends Command
 {
@@ -33,9 +34,10 @@ class ParseMoviesCommand extends Command
         $movieNum = 1;
 
         // All pages 6486. 15 movies per page
-        $maxPages = 100;
+        $maxPages = 1;
+        $pageNumber = DB::table('last_pages')->where('type', '=', 'movies')->pluck('page_number')->first();
 
-        for ($i = 1; $i <= $maxPages; $i++) { // Loop over two pages for scraping
+        for ($i = $pageNumber; $i < $pageNumber + $maxPages; $i++) { // Loop over two pages for scraping
             $url = $baseUrl . "?page=" . $i;
 
             $crawler = $client->request('GET', $url); // Make a GET request to a URL and store the response in $crawler object
@@ -75,7 +77,7 @@ class ParseMoviesCommand extends Command
 
                 $format = $jsonData['@type'] ?? '-';
 
-                $content = $newCrawler->filter('.content-txt')->each(function ($node) {
+                $content = $newCrawler->filter('.section.ovw.ovw-synopsis .content-txt')->each(function ($node) {
                     return $node->text();
                 });
                 $contentString = implode(" ", $content);
@@ -135,6 +137,13 @@ class ParseMoviesCommand extends Command
                 }
             }
         }
+        DB::table('last_pages')
+            ->where('type', '=', 'movies')
+            ->update([
+                'page_number' => $i,
+                'url' => $link
+            ]);
         return ('Movies parsed successfully!');
+
     }
 }

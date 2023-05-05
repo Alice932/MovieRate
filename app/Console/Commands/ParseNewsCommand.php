@@ -7,6 +7,7 @@ use Goutte\Client;
 use App\Models\News;
 use \Dejurin\GoogleTranslateForFree;
 use DateTime;
+use Illuminate\Support\Facades\DB;
 
 class ParseNewsCommand extends Command
 {
@@ -36,9 +37,12 @@ class ParseNewsCommand extends Command
         $newsNum = 1;
 
         // All pages 3017. 24 news per page
-        $maxPages = 100;
+        $maxPages = 1;
 
-        for ($i = 1; $i <= $maxPages; $i++) { // Loop over two pages for scraping
+        $pageNumber = DB::table('last_pages')->where('type', '=', 'news')->pluck('page_number')->first();
+
+        for ($i = $pageNumber; $i < $pageNumber + $maxPages; $i++) { // Loop over two pages for scraping
+
             $url = $baseUrl . "?page=" . $i;
 
             $crawler = $client->request('GET', $url); // Make a GET request to a URL and store the response in $crawler object
@@ -112,6 +116,12 @@ class ParseNewsCommand extends Command
                 }
             }
         }
+        DB::table('last_pages')
+        ->where('type', '=', 'news')
+            ->update([
+                'page_number' => $i,
+                'url' => $link
+            ]);
         return ('News parsed successfully!');
     }
 }

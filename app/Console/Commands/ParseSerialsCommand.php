@@ -6,6 +6,8 @@ use Illuminate\Console\Command;
 use Goutte\Client;
 use App\Models\Serial;
 use \Dejurin\GoogleTranslateForFree;
+use Illuminate\Support\Facades\DB;
+
 
 class ParseSerialsCommand extends Command
 {
@@ -35,9 +37,11 @@ class ParseSerialsCommand extends Command
         $serialNum = 1;
 
         // All pages 651. 19 serials per page
-        $maxPages = 100;
+        $maxPages = 1;
 
-        for ($i = 1; $i <= $maxPages; $i++) { // Loop over two pages for scraping
+        $pageNumber = DB::table('last_pages')->where('type', '=', 'serials')->pluck('page_number')->first();
+
+        for ($i = $pageNumber; $i < $pageNumber + $maxPages; $i++) { // Loop over two pages for scraping
             $url = $baseUrl . "?page=" . $i;
 
             $crawler = $client->request('GET', $url); // Make a GET request to a URL and store the response in $crawler object
@@ -78,10 +82,9 @@ class ParseSerialsCommand extends Command
 
                 $format = $jsonData['@type'] ?? '-';
 
-                $content = $newCrawler->filter('.content-txt')->each(function ($node) {
+                $content = $newCrawler->filter('.section.ovw.ovw-synopsis .content-txt')->each(function ($node) {
                     return $node->text();
                 });
-
                 $contentString = implode(" ", $content);
 
                 $genre = $jsonData['genre'] ?? '-';
@@ -119,6 +122,12 @@ class ParseSerialsCommand extends Command
                 }
             }
         }
+        DB::table('last_pages')
+        ->where('type', '=', 'serials')
+            ->update([
+                'page_number' => $i,
+                'url' => $link
+            ]);
         return ('Serials parsed successfully!');
 
     }
