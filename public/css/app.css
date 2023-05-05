@@ -340,173 +340,6 @@ a.buttonone span {
   margin: 2px 2px 0px 0px;
 }
 
-/*
-=======================================================================
-	Banner Rules
-=======================================================================
-*/
-#banner {
-  width: 984px;
-  height: 351px;
-  padding: 8px;
-  background-color: #111111;
-  border: #f9f9f9 solid 10px;
-  border-bottom: none;
-}
-
-#banner .leftsecbanner {
-  width: 660px;
-  height: 348px;
-  overflow: hidden;
-  float: left;
-}
-
-.sliderwrapper {
-  position: relative;
-  overflow: hidden;
-}
-
-.sliderwrapper .contentdiv {
-  visibility: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-  padding: 5px;
-  background: white;
-  width: 660px;
-  height: 100%;
-  float: left;
-  z-index: 9;
-}
-
-#banner object {
-  z-index: 1;
-  position: absolute;
-}
-
-#banner #paginate-slider2 {
-  width: 309px;
-  height: 348px;
-  float: right;
-  background-color: #202020;
-}
-
-#banner ul.idTabs {
-  float: left;
-  list-style: none;
-  border-bottom: #4b7eff solid 2px;
-  margin: 2px 0px 0px 2px;
-}
-
-#banner ul.idTabs li {
-  float: left;
-  cursor: pointer;
-}
-
-#banner ul.idTabs li a {
-  float: left;
-  display: inline-block;
-  background-image: url(../images/tab.gif);
-  background-repeat: no-repeat;
-  background-position: left;
-  height: 36px;
-  padding-left: 20px;
-  font-size: 12px;
-  color: #fff;
-  cursor: pointer;
-}
-
-#banner ul.idTabs li a span {
-  float: left;
-  display: inline-block;
-  background-image: url(../images/tab.gif);
-  background-repeat: no-repeat;
-  background-position: right;
-  height: 26px;
-  padding: 10px 20px 0px 0px;
-  cursor: pointer;
-}
-
-#banner ul.idTabs li a:hover {
-  background-image: url(../images/tab_rol.gif);
-}
-
-#banner ul.idTabs li a:hover span {
-  background-image: url(../images/tab_rol.gif);
-}
-
-#banner ul.idTabs li a.selected {
-  background-image: url(../images/tab_rol.gif);
-}
-
-#banner ul.idTabs li a.selected span {
-  background-image: url(../images/tab_rol.gif);
-}
-
-#banner .tabssection {
-  width: 100%;
-  float: left;
-}
-
-#banner .tabssection a.toc {
-  float: left;
-  display: inline-block;
-  padding: 10px 8px 10px 2px;
-}
-
-#banner .tabssection a.toc:hover {
-  background-image: url(../images/slider_hover.gif);
-  background-repeat: repeat-x;
-  background-color: #0a0a0a;
-}
-
-#banner .tabssection a.selected {
-  background-image: url(../images/slider_hover.gif);
-  background-repeat: repeat-x;
-  background-color: #0a0a0a;
-}
-
-#banner .tabssection a.toc span.thumb {
-  float: left;
-  border: #8f8f8f solid 1px;
-  background-color: #f7f7f7;
-  padding: 1px;
-  margin: 0px 10px;
-}
-
-#banner .tabssection a.toc span.desc {
-  float: right;
-  width: 175px;
-}
-
-#banner .tabssection a.toc span.title {
-  font-size: 12px;
-  color: #fefefe;
-  width: 180px;
-  display: inline-block;
-  margin-bottom: 10px;
-}
-
-#banner .tabssection a.toc span.time {
-  color: #666666;
-  float: left;
-  width: 39px;
-  height: 16px;
-  padding-top: 2px;
-  display: inline-block;
-  background-image: url(../images/time1.png);
-  font-size: 11px;
-  text-align: center;
-}
-
-#banner .tabssection a.toc span.channel {
-  font-size: 12px;
-  color: #666666;
-  float: left;
-  margin-left: 10px;
-  padding-top: 1px;
-}
-
 ul.pagination li {
   display: inline-block;
   margin-right: 5px;
@@ -609,7 +442,6 @@ ul.pagination li a img {
 .txt-content {
   font-size: 14px;
   line-height: 1.5;
-  margin-left: 10%;
   margin-top: 20px;
   margin-bottom: 40px;
   text-align: justify;
@@ -771,163 +603,6 @@ ul.pagination li a img {
 
 /*
 =======================================================================
-	Top Searches
-=======================================================================
-*/
-.topsearches {
-  width: 286px;
-  float: left;
-  margin-bottom: 20px;
-}
-
-.topsearches h5 {
-  width: 240px;
-  height: 23px;
-  padding: 9px 10px 0px 36px;
-  float: left;
-  background-color: #eeeeee;
-  background-image: url(../images/top_searches.gif);
-  background-repeat: no-repeat;
-  background-position: 7px 6px;
-}
-
-.topsearches ul {
-  float: left;
-  list-style: none;
-  padding: 10px;
-  width: 266px;
-}
-
-.topsearches ul li {
-  float: left;
-  list-style: none;
-}
-
-.topsearches ul li a {
-  float: left;
-  text-decoration: underline;
-  margin-right: 4px;
-  line-height: 18px;
-}
-
-.topsearches a.buttonone {
-  margin-right: 5px;
-}
-
-/*
-=======================================================================
-	Bread Crumb
-=======================================================================
-*/
-#crumb {
-  width: 1000px;
-  height: 34px;
-  border-bottom: #eee solid 1px;
-  margin-bottom: 10px;
-}
-
-#crumb h5 {
-  width: 92px;
-  height: 19px;
-  padding: 6px 0px 0px 10px;
-  background-image: url(../images/youarehere.gif);
-  background-repeat: no-repeat;
-  color: #FFF;
-  float: left;
-}
-
-#crumb ul {
-  float: left;
-  list-style: none;
-  padding: 5px 0px 0px 0px;
-}
-
-#crumb ul li {
-  float: left;
-  background-image: url(../images/sep1.gif);
-  background-repeat: no-repeat;
-  background-position: right;
-  padding: 0px 10px;
-}
-
-#crumb ul li.last {
-  background-image: none;
-}
-
-#crumb ul li.last a {
-  color: #000;
-  text-decoration: none;
-}
-
-#crumb ul li a {
-  color: #888;
-  text-decoration: underline;
-}
-
-#crumb ul li a:hover {
-  color: #000;
-  text-decoration: none;
-}
-
-/*
-=======================================================================
-	Map
-=======================================================================
-*/
-.map {
-  width: 278px;
-  padding: 3px;
-  background-color: #fefefe;
-  border: #e1e1e1 solid 1px;
-  float: left;
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-
-/*
-=======================================================================
-	Address
-=======================================================================
-*/
-.address {
-  width: 286px;
-}
-
-.address ul {
-  width: 286px;
-  list-style: none;
-}
-
-.address ul li h5 {
-  padding: 0px 0px 5px 0px;
-}
-
-.address ul li.phone {
-  width: 233px;
-  padding: 0px 0px 20px 53px;
-  background-image: url(../images/cus_serv.gif);
-  background-repeat: no-repeat;
-  background-position: 8px 0px;
-}
-
-.address ul li.adrs {
-  width: 233px;
-  padding: 0px 0px 20px 53px;
-  background-image: url(../images/address.gif);
-  background-repeat: no-repeat;
-  background-position: 8px 0px;
-}
-
-.address ul li.hours {
-  width: 233px;
-  padding: 0px 0px 20px 53px;
-  background-image: url(../images/officehours.gif);
-  background-repeat: no-repeat;
-  background-position: 8px 0px;
-}
-
-/*
-=======================================================================
 	Small Banner
 =======================================================================
 */
@@ -935,6 +610,145 @@ ul.pagination li a img {
   width: 697px;
   margin: 0px 0px 20px 0px;
   float: left;
+}
+
+/* Hero banner */
+.hero-banner {
+  background-color: #111;
+  color: #fff;
+  padding: 80px 0;
+}
+
+.hero-banner__content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-banner__content h1 {
+  font-size: 48px;
+  margin-bottom: 30px;
+}
+
+.hero-banner__content p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 40px;
+}
+
+.hero-banner__content a.button-primary {
+  display: inline-block;
+  background-color: #fff;
+  color: #111;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 14px 30px;
+  border-radius: 50px;
+  transition: background-color 0.3s ease;
+}
+
+.hero-banner__content a.button-primary:hover {
+  background-color: #222;
+  color: #fff;
+}
+
+.hero-banner__image {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.hero-banner__image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Featured movies */
+.featured-movies {
+  background-color: #fff;
+  padding: 80px 0;
+}
+
+.featured-movies__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.featured-movies__item {
+  margin-bottom: 40px;
+  width: calc(25% - 20px);
+}
+
+@media screen and (max-width: 991px) {
+  .featured-movies__item {
+    width: calc(33.33% - 20px);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .featured-movies__item {
+    width: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .featured-movies__item {
+    width: 100%;
+  }
+}
+
+.movie-card {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.movie-card__thumbnail {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.movie-card__thumbnail img {
+  max-width: 100%;
+  height: auto;
+}
+
+.movie-card__body {
+  text-align: center;
+}
+
+.movie-card__title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.movie-card__title a {
+  color: #111;
+}
+
+.movie-card__title a:hover {
+  color: #333;
+}
+
+.movie-card__meta {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.movie-card__desc {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.movie-card__actions {
+  margin-top: auto;
 }
 
 /*
@@ -1059,11 +873,11 @@ ul.pagination li a img {
   padding-bottom: 20px;
 }
 
-.blog ul.bloglisting {
+/* .blog ul.bloglisting {
   width: 697px;
   float: left;
   list-style: none;
-}
+} */
 
 .blog ul.bloglisting li {
   width: 697px;
@@ -1705,4 +1519,181 @@ ul.numbrs li {
   background-repeat: no-repeat;
   display: inline-block;
   margin-left: 10px;
+}
+
+.movie-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 -10px;
+}
+
+.movie-card {
+  width: calc(28.33% - 20px);
+  margin: 0 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.movie-card:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.movie-img-link {
+  display: block;
+  height: 0;
+  padding-bottom: 150%;
+  position: relative;
+}
+
+.movie-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.movie-info {
+  padding: 15px;
+}
+
+.movie-title {
+  font-size: 18px;
+  margin: 0 0 10px;
+}
+
+.movie-description {
+  margin: 0 0 10px;
+}
+
+.movie-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.movie-action-link {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+}
+
+.movie-action-link:hover {
+  background-color: #f5f5f5;
+}
+
+.movie-rating {
+  font-size: 16px;
+  color: #ccc;
+}
+
+.pagination {
+  margin-top: 20px;
+}
+
+.card {
+  border: none;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card .btn {
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 0;
+  padding: 10px 15px;
+  transition: all .3s;
+}
+
+.card .btn:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  border-bottom: 1px solid #eee;
+}
+
+.bloglisting {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bloglisting_2 {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bloglisting li {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.bloglisting li:last-child {
+  border-bottom: none;
+}
+
+.thumb img {
+  width: 154px;
+  height: 222px;
+  margin-right: 20px;
+  object-fit: cover;
+}
+
+.desc {
+  flex: 1;
+}
+
+.colr {
+  color: #f33;
+  margin: 0;
+}
+
+.txt-content {
+  padding: 20px;
+}
+
+.txt-content h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 10px;
+}
+
+.txt {
+  line-height: 1.5;
 }

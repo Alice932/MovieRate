@@ -6,10 +6,14 @@
     <title>@yield('title') - {{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css', 'resources/css/ddsmoothmenu.css'])
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js', 'resources/css/app.css', 'resources/css/ddsmoothmenu.css']) --}}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/app.js') }}">
+    <link rel="stylesheet" href="{{ asset('sass/app.scss') }}">
+    <link rel="stylesheet" href="{{ asset('css/ddsmoothmenu.css') }}">
 
     <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    {{-- <script src="{{ mix('js/app.js') }}" defer></script> --}}
 
 
     <!-- Additional Head Content -->

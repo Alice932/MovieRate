@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="col1">
-        <div class="blog">
-            <!-- Column 1 -->
+    <div>
+        <div>
             <h2 class="heading">{{ $serial->title }}</h2>
             <ul class="bloglisting">
                 <li>
@@ -30,6 +29,5 @@
             <div class="clear"></div>
         </div>
         <div class="clear"></div>
-    </div>
     </div>
 @endsection
